@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { Button, Avatar } from "@mui/material";
+import Image from "next/image";
 
 type UserTypes = {
   id: number;
@@ -64,23 +64,23 @@ export default function User() {
     };
 
     checkNextPage();
-
-    // console.log(checkHasMore.data);
   }, [page, fetchUsers]);
 
   return (
     <div className="text-center">
-      <ul className="flex flex-wrap justify-center gap-10">
+      <ul className="flex flex-wrap justify-center gap-10 min-h-60">
         {users.map((user) => (
           <li
             className="min-w-[30%] min-h-40 flex items-center justify-center"
             key={user.id}
           >
             <div>
-              <Avatar
+              <Image
                 alt={`${user.first_name} ${user.last_name}`}
                 src={user.avatar}
-                className="m-auto"
+                width="40"
+                height="40"
+                className="m-auto w-10 h-10 rounded-full"
               />
               <div className="text-center leading-8">
                 <p>{user.id}</p>
@@ -94,14 +94,20 @@ export default function User() {
         ))}
       </ul>
       {loading && <p>Loading...</p>}
-      <Button
-        className="m-auto flex justify-center my-10 capitalize text-white bg-primary active:bg-primary hover:bg-primary"
-        variant="contained"
-        onClick={handleLoadMore}
-        disabled={loading || !hasMore} // Disable button if loading or no more content
-      >
-        Load more
-      </Button>
+
+      {!loading && users.length > 0 && (
+        <button
+          className={`m-auto flex justify-center my-10 capitalize text-white px-10 py-2.5 rounded-sm shadow-md ${
+            loading || !hasMore
+              ? "bg-primary/50 active:bg-primary/50 hover:bg-primary/50"
+              : "bg-primary active:bg-primary hover:bg-primary"
+          }`}
+          onClick={handleLoadMore}
+          disabled={loading || !hasMore}
+        >
+          Load more
+        </button>
+      )}
     </div>
   );
 }

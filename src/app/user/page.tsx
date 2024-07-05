@@ -1,9 +1,9 @@
-import User from '@/app/components/users'
+import Users from '@/app/components/users'
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <User />
+      <Users />
     </main>
   )
 }

@@ -56,7 +56,6 @@ export default function User() {
       const checkHasMore = await fetchUsers();
 
       if (checkHasMore.data.length > 0) {
-        console.log("has next data");
         setHasMore(true);
       } else {
         setHasMore(false);
@@ -68,7 +67,7 @@ export default function User() {
 
   return (
     <div className="text-center">
-      <ul className="flex flex-wrap justify-center gap-10 min-h-60">
+      <ul className="flex justify-center flex-wrap min-h-60 max-w-4xl">
         {users.map((user) => (
           <li
             className="min-w-[30%] min-h-40 flex items-center justify-center"
@@ -93,21 +92,24 @@ export default function User() {
           </li>
         ))}
       </ul>
+
       {loading && <p>Loading...</p>}
 
-      {!loading && users.length > 0 && (
-        <button
-          className={`m-auto flex justify-center my-10 capitalize text-white px-10 py-2.5 rounded-sm shadow-md ${
-            loading || !hasMore
-              ? "bg-primary/50 active:bg-primary/50 hover:bg-primary/50"
-              : "bg-primary active:bg-primary hover:bg-primary"
-          }`}
-          onClick={handleLoadMore}
-          disabled={loading || !hasMore}
-        >
-          Load more
-        </button>
-      )}
+      <div className="flex justify-center">
+        {!loading && users.length > 0 && (
+          <button
+            className={`flex justify-center my-10 capitalize text-white px-10 py-2.5 rounded-sm shadow-md ${
+              loading || !hasMore
+                ? "bg-primary/50 active:bg-primary/50 hover:bg-primary/50"
+                : "bg-primary active:bg-primary hover:bg-primary"
+            }`}
+            onClick={handleLoadMore}
+            disabled={loading || !hasMore}
+          >
+            Load more
+          </button>
+        )}
+      </div>
     </div>
   );
 }
